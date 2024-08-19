@@ -1,0 +1,73 @@
+<ion-content [fullscreen]="true">
+  <nequi-header title="Tareas"></nequi-header>
+  <div class="content">
+    <ion-button (click)="addUpdateTask()" class="ion-margin" mode="ios">
+      Nueva Categoría <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+    </ion-button>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let task of tasks" size-lg="6" size-md="6" size-sm="6" size="10">
+          <ion-card mode="ios">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-text-center" size-lg="5" size-md="5" size-sm="4" size="12">
+                  <circle-progress
+                    [percent]="getPercentege(task)"
+                    [radius]="65"
+                    [outerStrokeWidth]="6"
+                    [innerStrokeWidth]="4"
+                    [outerStrokeColor]="'#78C000'"
+                    [innerStrokeColor]="'#C7E596'"
+                    [animation]="true"
+                    [animationDuration]="300"
+                    [titleColor]="'var(--ion-color-dark)'"
+                    [subtitle]="'Progreso'"
+                  ></circle-progress>
+                </ion-col>
+
+                <ion-col class="ion-padding" size-lg="7" size-md="7" size-sm="8" size="10">
+                  <div class="title">{{task.title}}</div>
+                  <p>{{task.description | slice:0:85}}...</p>
+                  <div class="ion-text-center">
+                    <ion-button (click)="addUpdateTask(task)" class="task-btn" mode="ios" size="small">
+                      Ver <ion-icon slot="end" name="eye-outline"></ion-icon>
+                    </ion-button>
+
+                    <ion-button (click)="confirmDeleteTask(task)" class="task-btn" mode="ios" color="danger" size="small">
+                      Eliminar <ion-icon slot="end" name="trash-outline"></ion-icon>
+                    </ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="loading">
+        <ion-col *ngFor="let p of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]" size-lg="6" size-md="6" size-sm="12" size="12">
+          <ion-card mode="ios">
+            <div *ngFor="let item of [1,1,1,1]">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </div>
+            <div *ngFor="let item of [1,1,1,1]">
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!loading && !tasks.length">
+        <ion-col class="empty" size="12">
+          <ion-icon name="create-outline"></ion-icon>
+          <h4>No tienes tareas</h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="ion-text-center">
+      <nequi-logo></nequi-logo>
+    </div>
+  </div>
+</ion-content>
